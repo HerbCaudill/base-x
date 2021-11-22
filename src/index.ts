@@ -126,10 +126,17 @@ export const basex = (alphabet: string): BaseConverter => {
   return { encode, decodeUnsafe, decode }
 }
 
-export const base2 = basex('01')
-export const base16 = basex('0123456789abcdef')
-export const base45 = basex('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:')
-export const base58 = basex('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz')
+export const base2 = basex(`01`)
+export const base8 = basex(`01234567`)
+export const base11 = basex(`0123456789a`)
+export const base16 = basex(`0123456789abcdef`)
+export const base32 = basex(`0123456789ABCDEFGHJKMNPQRSTVWXYZ`)
+export const basez32 = basex(`ybndrfg8ejkmcpqxot1uwisza345h769`)
+export const base36 = basex(`0123456789abcdefghijklmnopqrstuvwxyz`)
+export const base58 = basex(`123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz`)
+export const base62 = basex(`0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`)
+export const base64 = basex(`ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/`)
+export const base67 = basex(`ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.!~`)
 
 export interface BaseConverter {
   encode(buffer: Buffer | number[] | Uint8Array): string
