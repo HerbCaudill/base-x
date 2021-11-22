@@ -7,7 +7,7 @@ var bs58ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 var bs58 = basex(bs58ALPHABET)
 
 var fixtureIndex = 0
-var resetFixtureIndex = function () {
+var reset = function () {
   fixtureIndex = 0
 }
 var fixtures = new Array(10000)
@@ -34,36 +34,24 @@ if (/fast/i.test(process.argv[2])) {
   benchmark.options.minTime = 1
 }
 
-const setup = {
-  onStart: function () {
-    console.log('--------------------------------------------------')
-  },
-  onCycle: function (event: any) {
-    console.log(String(event.target))
-  },
-  onError: function (event: any) {
-    console.error(event.target.error)
-  },
-  onComplete: function () {
-    console.log('==================================================')
-  },
+const options = {
+  onStart: () => console.log('--------------------------------------------------'),
+  onCycle: (event: any) => console.log(String(event.target)),
+  onError: (event: any) => console.error(event.target.error),
+  onComplete: () => console.log('=================================================='),
 }
 
-new benchmark.Suite('bs58', setup)
-  .add(
-    'encode',
-    function () {
-      var fixture = getNextFixture()
-      bs58.encode(fixture.source)
-    },
-    { onStart: resetFixtureIndex, onCycle: resetFixtureIndex }
-  )
-  .add(
-    'decode',
-    function () {
-      var fixture = getNextFixture()
-      bs58.decode(fixture.string)
-    },
-    { onStart: resetFixtureIndex, onCycle: resetFixtureIndex }
-  )
+const encode = function (): void {
+  var fixture = getNextFixture()
+  bs58.encode(fixture.source)
+}
+
+const decode = function (): void {
+  var fixture = getNextFixture()
+  bs58.decode(fixture.string)
+}
+
+new benchmark.Suite('bs58', options)
+  .add('encode', encode, { onStart: reset, onCycle: reset })
+  .add('decode', decode, { onStart: reset, onCycle: reset })
   .run()
