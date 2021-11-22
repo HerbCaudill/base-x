@@ -30,20 +30,17 @@
     "url": "https://github.com/cryptocoinjs/base-x.git"
   },
   "scripts": {
-    "build": "tsc -p ./tsconfig.json ; standard --fix",
-    "gitdiff": "npm run build && git diff --exit-code",
-    "prepublish": "npm run gitdiff",
-    "standard": "standard",
-    "test": "npm run unit && npm run standard",
-    "unit": "tape test/*.js"
+    "build": "tsc -p ./tsconfig.json",
+    "test": "ts-node node_modules/tape/bin/tape test/index.ts"
   },
   "devDependencies": {
-    "@types/node": "12.0.10",
-    "standard": "^10.0.3",
-    "tape": "^4.5.1",
-    "typescript": "3.5.2"
+    "@types/node": "12",
+    "tape": "5",
+    "ts-node": "^10.4.0",
+    "typescript": "4"
   },
   "dependencies": {
-    "safe-buffer": "^5.0.1"
+    "@types/tape": "^4.13.2",
+    "buffer": "6"
   }
 }

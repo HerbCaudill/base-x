@@ -4,10 +4,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or http://www.opensource.org/licenses/mit-license.php.
 
-// @ts-ignore
-const _Buffer = require('safe-buffer').Buffer;
-
-function base (ALPHABET: string): base.BaseConverter {
+function base(ALPHABET: string): base.BaseConverter {
   if (ALPHABET.length >= 255) throw new TypeError('Alphabet too long')
 
   const BASE_MAP = new Uint8Array(256)
@@ -28,9 +25,9 @@ function base (ALPHABET: string): base.BaseConverter {
   const FACTOR = Math.log(BASE) / Math.log(256) // log(BASE) / log(256), rounded up
   const iFACTOR = Math.log(256) / Math.log(BASE) // log(256) / log(BASE), rounded up
 
-  function encode (source: Buffer | number[] | Uint8Array): string {
-    if (Array.isArray(source) || source instanceof Uint8Array) source = _Buffer.from(source)
-    if (!_Buffer.isBuffer(source)) throw new TypeError('Expected Buffer')
+  function encode(source: Buffer | number[] | Uint8Array): string {
+    if (Array.isArray(source) || source instanceof Uint8Array) source = Buffer.from(source)
+    if (!Buffer.isBuffer(source)) throw new TypeError('Expected Buffer')
     if (source.length === 0) return ''
 
     // Skip & count leading zeroes.
@@ -54,9 +51,9 @@ function base (ALPHABET: string): base.BaseConverter {
 
       // Apply "b58 = b58 * 256 + ch".
       let i = 0
-      for (let it1 = size - 1; (carry !== 0 || i < length) && (it1 !== -1); it1--, i++) {
+      for (let it1 = size - 1; (carry !== 0 || i < length) && it1 !== -1; it1--, i++) {
         carry += (256 * b58[it1]) >>> 0
-        b58[it1] = (carry % BASE) >>> 0
+        b58[it1] = carry % BASE >>> 0
         carry = (carry / BASE) >>> 0
       }
 
@@ -78,9 +75,9 @@ function base (ALPHABET: string): base.BaseConverter {
     return str
   }
 
-  function decodeUnsafe (source: string): Buffer | undefined {
+  function decodeUnsafe(source: string): Buffer | undefined {
     if (typeof source !== 'string') throw new TypeError('Expected String')
-    if (source.length === 0) return _Buffer.alloc(0)
+    if (source.length === 0) return Buffer.alloc(0)
 
     let psz = 0
 
@@ -93,7 +90,7 @@ function base (ALPHABET: string): base.BaseConverter {
     }
 
     // Allocate enough space in big-endian base256 representation.
-    const size = (((source.length - psz) * FACTOR) + 1) >>> 0 // log(58) / log(256), rounded up.
+    const size = ((source.length - psz) * FACTOR + 1) >>> 0 // log(58) / log(256), rounded up.
     const b256 = new Uint8Array(size)
 
     // Process the characters.
@@ -105,9 +102,9 @@ function base (ALPHABET: string): base.BaseConverter {
       if (carry === 255) return
 
       let i = 0
-      for (let it3 = size - 1; (carry !== 0 || i < length) && (it3 !== -1); it3--, i++) {
+      for (let it3 = size - 1; (carry !== 0 || i < length) && it3 !== -1; it3--, i++) {
         carry += (BASE * b256[it3]) >>> 0
-        b256[it3] = (carry % 256) >>> 0
+        b256[it3] = carry % 256 >>> 0
         carry = (carry / 256) >>> 0
       }
 
@@ -122,7 +119,7 @@ function base (ALPHABET: string): base.BaseConverter {
       it4++
     }
 
-    const vch = _Buffer.allocUnsafe(zeroes + (size - it4))
+    const vch = Buffer.allocUnsafe(zeroes + (size - it4))
     vch.fill(0x00, 0, zeroes)
 
     let j = zeroes
@@ -133,7 +130,7 @@ function base (ALPHABET: string): base.BaseConverter {
     return vch
   }
 
-  function decode (string: string): Buffer {
+  function decode(string: string): Buffer {
     const buffer = decodeUnsafe(string)
     if (buffer) return buffer
 
@@ -143,16 +140,16 @@ function base (ALPHABET: string): base.BaseConverter {
   return {
     encode: encode,
     decodeUnsafe: decodeUnsafe,
-    decode: decode
+    decode: decode,
   }
 }
 
-export = base;
+export = base
 
 declare namespace base {
-    interface BaseConverter {
-        encode(buffer: Buffer | number[] | Uint8Array): string;
-        decodeUnsafe(string: string): Buffer | undefined;
-        decode(string: string): Buffer;
-    }
+  interface BaseConverter {
+    encode(buffer: Buffer | number[] | Uint8Array): string
+    decodeUnsafe(string: string): Buffer | undefined
+    decode(string: string): Buffer
+  }
 }

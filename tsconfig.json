@@ -1,31 +1,25 @@
 {
   "compilerOptions": {
-    "target": "ES5",
-    "module": "commonjs",
-    "outDir": "./src",
-    "declaration": true,
-    "rootDir": "./ts_src",
-    "types": [
-      "node"
-    ],
     "allowJs": false,
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
     "alwaysStrict": true,
-    "esModuleInterop": false,
+    "declaration": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "outDir": "js_src",
+    "resolveJsonModule": true,
+    "rootDir": "src",
+    "strict": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "target": "ES5",
+    "types": ["node"]
   },
-  "include": [
-      "ts_src/**/*.ts"
-  ],
-  "exclude": [
-      "**/*.spec.ts",
-      "node_modules/**/*"
-  ]
+  "exclude": ["**/*.spec.ts", "node_modules/**/*"],
+  "include": ["src/**/*.ts"]
 }
