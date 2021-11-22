@@ -1,4 +1,4 @@
-import basex, { BaseConverter } from '../src'
+import { basex, BaseConverter } from '.'
 import test from 'tape'
 import fixtures from './fixtures.json'
 
@@ -77,7 +77,7 @@ test('encode throws on string', function (t) {
 
   t.plan(1)
   t.throws(function () {
-    //@ts-ignorew
+    //@ts-ignore
     base.encode('a')
   }, new RegExp('^TypeError: Expected Buffer$'))
 })

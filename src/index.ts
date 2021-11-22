@@ -1,4 +1,4 @@
-function base(alphabet: string): base.BaseConverter {
+export const basex = (alphabet: string): BaseConverter => {
   if (alphabet.length >= 255) throw new TypeError('Alphabet can only have 255 characters or less')
 
   const baseMap = new Uint8Array(256)
@@ -107,13 +107,13 @@ function base(alphabet: string): base.BaseConverter {
     let it4 = size - length
     while (it4 !== size && encoded[it4] === 0) it4++
 
-    const vch = Buffer.allocUnsafe(zeroes + (size - it4))
-    vch.fill(0x00, 0, zeroes)
+    const decoded = Buffer.allocUnsafe(zeroes + (size - it4))
+    decoded.fill(0x00, 0, zeroes)
 
     let j = zeroes
-    while (it4 !== size) vch[j++] = encoded[it4++]
+    while (it4 !== size) decoded[j++] = encoded[it4++]
 
-    return vch
+    return decoded
   }
 
   function decode(string: string): Buffer {
@@ -126,12 +126,13 @@ function base(alphabet: string): base.BaseConverter {
   return { encode, decodeUnsafe, decode }
 }
 
-export = base
+export const base2 = basex('01')
+export const base16 = basex('0123456789abcdef')
+export const base45 = basex('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:')
+export const base58 = basex('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz')
 
-declare namespace base {
-  interface BaseConverter {
-    encode(buffer: Buffer | number[] | Uint8Array): string
-    decodeUnsafe(string: string): Buffer | undefined
-    decode(string: string): Buffer
-  }
+export interface BaseConverter {
+  encode(buffer: Buffer | number[] | Uint8Array): string
+  decodeUnsafe(string: string): Buffer | undefined
+  decode(string: string): Buffer
 }

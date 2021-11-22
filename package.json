@@ -23,15 +23,15 @@
   "files": [
     "src"
   ],
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "main": "dist/index.ts",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/cryptocoinjs/base-x.git"
   },
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
-    "test": "ts-node node_modules/tape/bin/tape test/index.ts",
+    "test": "ts-node node_modules/tape/bin/tape src/test.ts",
     "benchmark": "ts-node ./src/benchmark.ts "
   },
   "devDependencies": {

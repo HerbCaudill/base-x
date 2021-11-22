@@ -9,7 +9,7 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "js_src",
+    "outDir": "dist",
     "resolveJsonModule": true,
     "rootDir": "src",
     "strict": true,
@@ -20,5 +20,5 @@
     "target": "ES5",
     "types": ["node"]
   },
-  "include": ["src/**/*.ts", "src/@types"]
+  "include": ["src/**/index.ts"]
 }

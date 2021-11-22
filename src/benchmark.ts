@@ -1,8 +1,7 @@
-'use strict'
 import crypto from 'crypto'
 import benchmark from 'benchmark'
 
-import basex from '.'
+import { basex } from '.'
 var bs58ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 var bs58 = basex(bs58ALPHABET)
 
